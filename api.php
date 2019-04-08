@@ -356,8 +356,6 @@ class API {
 	
 	function __construct() {
 		
-
-
 		$this->db = new MysqlDriver([
 			'dbname' => $config['database'],
 			'host' => 'localhost',
