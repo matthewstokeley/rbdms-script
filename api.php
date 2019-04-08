@@ -336,6 +336,17 @@ class MysqlDriver {
 
 }
 
+
+class HashAndSalt {
+
+  function __construct() {}
+  function hash() {}
+  function getSalt() {}
+  function setSalt() {}
+
+}
+
+
 class API {
 
 	private $path;
@@ -345,11 +356,13 @@ class API {
 	
 	function __construct() {
 		
+
+
 		$this->db = new MysqlDriver([
-			'dbname' => 'world',
+			'dbname' => $config['database'],
 			'host' => 'localhost',
-			'username' => 'root',
-			'password' => 'root',
+			'username' => $config['username'],
+			'password' => '',
 			'charset' => 'utf8',
 			'collate' => 'utf8_unicode_ci' 
 		]);

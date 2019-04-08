@@ -1,7 +1,7 @@
 <?php
 
-$db_login_info = [
-    "db" => "db",
-    "user" => "user",
-    "pass" => "pass"
+$config = [
+    "database" => "db",
+    "username" => "user",
+    "hash" => "top-secret-hash"
 ];
