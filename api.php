@@ -339,10 +339,21 @@ class MysqlDriver {
 
 class HashAndSalt {
 
+  private $salt;
+
   function __construct() {}
-  function hash() {}
-  function getSalt() {}
-  function setSalt() {}
+
+  function hash(String $string) {
+    return $string;
+  }
+
+  function getSalt() {
+    return $this->salt;
+  }
+  function setSalt(String $salt) {
+    $this->salt = $salt;
+    return $this;
+  }
 
 }
 
