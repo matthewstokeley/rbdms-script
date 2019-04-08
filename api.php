@@ -357,7 +357,6 @@ class HashAndSalt {
 
 }
 
-
 class API {
 
 	private $path;
@@ -365,7 +364,7 @@ class API {
 	private  $route;
 	private  $db;
 	
-	function __construct() {
+	function __construct(Array $config) {
 		
 		$this->db = new MysqlDriver([
 			'dbname' => $config['database'],
@@ -437,7 +436,7 @@ class API {
 }
 
 try {
-	$api = new API();
+	$api = new API($config);
 
 	// @todo set headers
 	header('Content-Type: application/vnd.api+json');
