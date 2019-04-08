@@ -6,3 +6,6 @@ a quick-and-dirty api with a mysql driver implementing PDO.  To be replaced with
 
 #### Documentation
 
+#### Wishlist
+
+- composer auto-loader
