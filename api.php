@@ -370,7 +370,7 @@ class API {
 			'dbname' => $config['database'],
 			'host' => 'localhost',
 			'username' => $config['username'],
-			'password' => '',
+			'password' => 'root',
 			'charset' => 'utf8',
 			'collate' => 'utf8_unicode_ci' 
 		]);
@@ -429,7 +429,6 @@ class API {
 
 		// @todo rename parameter
 		$method = $this->getData()['query'];
-
 		return $this->db->{$method}($route, $data);
 	}
 
