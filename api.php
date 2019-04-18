@@ -242,13 +242,13 @@ class MysqlDriver {
    		}
 
 
-       $sql = 'UPDATE '.$table.' SET '.$string.' WHERE '.$data['column'].'='.$data['search_query'];
+      $sql = 'UPDATE '.$table.' SET '.$string.' WHERE '.$data['column'].'='.$data['search_query'];
 
-       //echo $string;
-       $status = $this->pdo->prepare($sql)->execute($row);
-       return $status ? json_encode(["status" => 204, 'message' => 'ok']) : json_encode(['status' => 401, 'message' => 'error']);
+      //echo $string;
+      $status = $this->pdo->prepare($sql)->execute($row);
+      return $status ? json_encode(["status" => 204, 'message' => 'ok']) : json_encode(['status' => 401, 'message' => 'error']);
    
-   }
+  }
 
    /**
      *
@@ -339,20 +339,26 @@ class MysqlDriver {
 
 class HashAndSalt {
 
-  private $salt;
+  public static $salt;
 
   function __construct() {}
 
-  function hash(String $string) {
-    return $string;
-  }
-
-  function getSalt() {
+  public function getSalt() {
     return $this->salt;
   }
-  function setSalt(String $salt) {
+  
+  public function setSalt(String $salt) {
     $this->salt = $salt;
     return $this;
+  }
+
+  static function hashingAlgorithm($password, $salt) {
+      // @todo sha256
+      return $hash;
+  }
+
+  static function hash($password, $salt) {
+      return HashAndSalt::hashingAlgorithm($password, $salt);
   }
 
 }
@@ -361,16 +367,19 @@ class API {
 
 	private $path;
 	private $length;
-	private  $route;
-	private  $db;
+	private $route;
+	private $db;
 	
 	function __construct(Array $config) {
 		
+    HashAndSalt::$salt = '';
+
 		$this->db = new MysqlDriver([
 			'dbname' => $config['database'],
 			'host' => 'localhost',
 			'username' => $config['username'],
 			'password' => 'root',
+      // 'password' => HashAndSalt::hash($config['password'], HashAndSalt::$salt)
 			'charset' => 'utf8',
 			'collate' => 'utf8_unicode_ci' 
 		]);
@@ -424,12 +433,13 @@ class API {
 
 	public function switch() {
 		$route = $this->getRoute();
-
+    
 		$data = $this->getData();
 
 		// @todo rename parameter
 		$method = $this->getData()['query'];
 		return $this->db->{$method}($route, $data);
+
 	}
 
 }
@@ -439,6 +449,11 @@ try {
 
 	// @todo set headers
 	header('Content-Type: application/vnd.api+json');
+
+  // switch
+
+  // @todo implement spec
+
 	// @todo
 	print_r(json_encode($api->switch()));
 
