@@ -241,7 +241,6 @@ class MysqlDriver {
    	      $data['search_query'] = $data['id'];
    		}
 
-
       $sql = 'UPDATE '.$table.' SET '.$string.' WHERE '.$data['column'].'='.$data['search_query'];
 
       //echo $string;
@@ -337,31 +336,35 @@ class MysqlDriver {
 }
 
 
-class HashAndSalt {
+// class HashAndSalt {
 
-  public static $salt;
+//   public static $salt;
 
-  function __construct() {}
+//   function __construct() {}
 
-  public function getSalt() {
-    return $this->salt;
-  }
+//   public function getSalt() {
+//     return $this->salt;
+//   }
   
-  public function setSalt(String $salt) {
-    $this->salt = $salt;
-    return $this;
-  }
+//   public function setSalt(String $salt) {
+//     $this->salt = $salt;
+//     return $this;
+//   }
 
-  static function hashingAlgorithm($password, $salt) {
-      // @todo sha256
-      return $hash;
-  }
+//   public static function hashingAlgorithm($password, $salt) {
+//       try {
+//         return //sha256($password, $salt);
+//       } catch (Exception $e) {
+//          print($e->getMessage());
+//       }
 
-  static function hash($password, $salt) {
-      return HashAndSalt::hashingAlgorithm($password, $salt);
-  }
+//   }
 
-}
+//   static function hash($password, $salt) {
+//       return HashAndSalt::hashingAlgorithm($password, $salt);
+//   }
+
+// }
 
 class API {
 
@@ -372,7 +375,7 @@ class API {
 	
 	function __construct(Array $config) {
 		
-    HashAndSalt::$salt = '';
+    // HashAndSalt::$salt = '';
 
 		$this->db = new MysqlDriver([
 			'dbname' => $config['database'],
@@ -432,8 +435,8 @@ class API {
 	}
 
 	public function switch() {
+
 		$route = $this->getRoute();
-    
 		$data = $this->getData();
 
 		// @todo rename parameter
@@ -445,17 +448,18 @@ class API {
 }
 
 try {
-	$api = new API($config);
 
-	// @todo set headers
-	header('Content-Type: application/vnd.api+json');
+	  $api = new API($config);
 
-  // switch
+	  // @todo set headers
+	  header('Content-Type: application/vnd.api+json');
 
-  // @todo implement spec
+    // switch
 
-	// @todo
-	print_r(json_encode($api->switch()));
+    // @todo implement spec
+
+	  // @todo
+	  print_r(json_encode($api->switch()));
 
 } catch (Exception $error) {
 	print($error);
